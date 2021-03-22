@@ -39,12 +39,15 @@ class _HomePageState extends State<HomePage> {
                           context: context,
                           builder: (context) => AlertDialog(
                             content: Text(state.errorMessage),
-                          )
-                      ));
-
+                          ),
+                      ).then((value) => {
+                        BlocProvider.of<ShortenedUrlBloc>(context).add(
+                            DialogDismissedEvent()
+                        )
+                      }));
                     }
 
-                    if (state is ShortenedUrlLoadingState) {
+                    if (state.isLoading) {
                       return CircularProgressIndicator();
                     } else {
                       return Column(
@@ -70,13 +73,33 @@ class _HomePageState extends State<HomePage> {
                               );
                             },
                           ),
-                          Text(
-                            "Your shortened url:",
-                          ),
-                          Text(
-                            state.shortenedUrl,
-                            style: Theme.of(context).textTheme.headline4,
-                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 20),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  "Your shortened url:",
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      state.shortenedUrl,
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                    CustomButton(
+                                      text: "Copy",
+                                      onPressed: () {
+                                        BlocProvider.of<ShortenedUrlBloc>(context).add(
+                                            FetchShortenedUrlEvent()
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
                         ],
                       );
                     }

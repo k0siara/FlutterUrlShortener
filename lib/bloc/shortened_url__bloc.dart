@@ -11,32 +11,34 @@ part 'shortened_url__state.dart';
 class ShortenedUrlBloc extends Bloc<ShortenedUrlEvent, ShortenedUrlState> {
   final ShortUrlRepository _repository;
 
-  ShortenedUrlBloc(this._repository) : super(ShortenedUrlInitialState());
+  ShortenedUrlBloc(this._repository)
+      : super(ShortenedUrlState(
+            urlToBeShortened: "",
+            shortenedUrl: "",
+            errorMessage: "",
+            isLoading: false));
 
   @override
   Stream<ShortenedUrlState> mapEventToState(
     ShortenedUrlEvent event,
   ) async* {
     if (event is UrlToBeShortenedChangedEvent) {
-      print('changed url to' + event.urlToBeShortened);
-      yield state.copyWith(
-        urlToBeShortened: event.urlToBeShortened
-      );
-    }
-    if (event is FetchShortenedUrlEvent) {
-      print(state.urlToBeShortened);
+      yield state.copyWith(urlToBeShortened: event.urlToBeShortened);
+    } else if (event is DialogDismissedEvent) {
+      yield state.copyWith(errorMessage: "");
+    } else if (event is FetchShortenedUrlEvent) {
       try {
-        yield ShortenedUrlLoadingState(state.urlToBeShortened, state.shortenedUrl);
-        var response = await _repository.getShortenedUrl(state.urlToBeShortened);
-        yield ShortenedUrlSuccessState(
-            state.urlToBeShortened, response.resultUrl);
-      } catch (error) {
-        throw error;
+        yield state.copyWith(isLoading: true);
+        var response =
+            await _repository.getShortenedUrl(state.urlToBeShortened);
         yield state.copyWith(
-            errorMessage: error.toString()
+            urlToBeShortened: "",
+            shortenedUrl: response.resultUrl
         );
-        // yield ShortenedUrlErrorState(
-        //     state.urlToBeShortened, state.shortenedUrl, error.toString());
+      } catch (error) {
+        yield state.copyWith(errorMessage: error.toString());
+      } finally {
+        yield state.copyWith(isLoading: false);
       }
     }
   }

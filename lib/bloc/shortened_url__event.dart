@@ -11,11 +11,4 @@ class UrlToBeShortenedChangedEvent extends ShortenedUrlEvent {
 
 class FetchShortenedUrlEvent extends ShortenedUrlEvent {}
 
-class ShortenUrlSuccessEvent extends ShortenedUrlEvent {
-  final String urlToBeShortened;
-  final String shortenedUrl;
-
-  ShortenUrlSuccessEvent(this.urlToBeShortened, this.shortenedUrl);
-}
-
-class ShortenUrlErrorEvent extends ShortenedUrlEvent {}
+class DialogDismissedEvent extends ShortenedUrlEvent {}
