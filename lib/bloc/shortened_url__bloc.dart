@@ -36,7 +36,7 @@ class ShortenedUrlBloc extends Bloc<ShortenedUrlEvent, ShortenedUrlState> {
             shortenedUrl: response.resultUrl
         );
       } catch (error) {
-        yield state.copyWith(errorMessage: error.toString());
+        yield state.copyWith(errorMessage: "Invalid url");
       } finally {
         yield state.copyWith(isLoading: false);
       }
