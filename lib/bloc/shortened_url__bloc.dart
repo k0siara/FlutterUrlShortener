@@ -27,12 +27,9 @@ class ShortenedUrlBloc extends Bloc<ShortenedUrlEvent, ShortenedUrlState> {
       print(state.urlToBeShortened);
       try {
         yield ShortenedUrlLoadingState(state.urlToBeShortened, state.shortenedUrl);
-        var response =
-            await _repository.getShortenedUrl(state.urlToBeShortened);
-
-
+        var response = await _repository.getShortenedUrl(state.urlToBeShortened);
         yield ShortenedUrlSuccessState(
-            state.urlToBeShortened, "response.body.resultUrl");
+            state.urlToBeShortened, response.resultUrl);
       } catch (error) {
         throw error;
         yield state.copyWith(
