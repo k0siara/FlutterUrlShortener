@@ -1,5 +1,7 @@
 # Flutter URL Shortener
 
+Simple Flutter App shortening long urls using material ui, bloc architecture and chopper for network calls
+
 <img src="art/Screenshot_01.png" width="360"> <img src="art/Screenshot_02.png" width="360">
 
 ## Architecture
