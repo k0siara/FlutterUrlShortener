@@ -14,7 +14,7 @@
 
 # License
 
-    Copyright 2020 Patryk Marciszek-Kosieradzki
+    Copyright 2021 Patryk Marciszek-Kosieradzki
 
     Licensed under the Apache License, Version 2.0 (the "License");
 
