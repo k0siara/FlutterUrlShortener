@@ -12,11 +12,14 @@ class ShortenedUrlBloc extends Bloc<ShortenedUrlEvent, ShortenedUrlState> {
   final ShortUrlRepository _repository;
 
   ShortenedUrlBloc(this._repository)
-      : super(ShortenedUrlState(
+      : super(
+          ShortenedUrlState(
             urlToBeShortened: "",
             shortenedUrl: "",
             errorMessage: "",
-            isLoading: false));
+            isLoading: false,
+          ),
+        );
 
   @override
   Stream<ShortenedUrlState> mapEventToState(
@@ -32,9 +35,7 @@ class ShortenedUrlBloc extends Bloc<ShortenedUrlEvent, ShortenedUrlState> {
         var response =
             await _repository.getShortenedUrl(state.urlToBeShortened);
         yield state.copyWith(
-            urlToBeShortened: "",
-            shortenedUrl: response.resultUrl
-        );
+            urlToBeShortened: "", shortenedUrl: response.resultUrl);
       } catch (error) {
         yield state.copyWith(errorMessage: "Invalid url");
       } finally {

@@ -7,8 +7,12 @@ class ShortenedUrlState extends Equatable {
   final String errorMessage;
   final bool isLoading;
 
-  ShortenedUrlState(
-      {this.errorMessage, this.urlToBeShortened, this.shortenedUrl, this.isLoading});
+  ShortenedUrlState({
+    this.errorMessage,
+    this.urlToBeShortened,
+    this.shortenedUrl,
+    this.isLoading,
+  });
 
   ShortenedUrlState copyWith({
     String urlToBeShortened,
@@ -25,5 +29,10 @@ class ShortenedUrlState extends Equatable {
   }
 
   @override
-  List<Object> get props => [urlToBeShortened, shortenedUrl, errorMessage, isLoading];
+  List<Object> get props => [
+        urlToBeShortened,
+        shortenedUrl,
+        errorMessage,
+        isLoading,
+      ];
 }
